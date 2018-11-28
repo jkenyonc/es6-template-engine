@@ -1,14 +1,18 @@
 const interpolateString = string =>
 	new Function('data', `return \`${string}\``);
 
-const parseTemplate = (fragment, data, parseTextNodes=true) => {
+var parseTemplate = (fragment, data, parseTextNodes = true) => {
 	if (parseTextNodes) {
-		let n;
-		let walk = document.createTreeWalker(fragment, NodeFilter.SHOW_TEXT, null, false);
-		while ((n = walk.nextNode())) {
-			if(n.nodeValue.trim()) {
-				n.nodeValue = interpolateString(n.nodeValue)(data);
+		// let n;
+		const iter = document.createNodeIterator(fragment, NodeFilter.SHOW_TEXT, null)
+		const textNodes = {
+			*[Symbol.iterator]() {
+				const current = iter.nextNode()
+				return current ? {next: current, done: false} : {done: true}
 			}
+		}
+		for (let node of textNodes) {
+			console.log(node.nodeValue)
 		}
 	}
 	fragment.querySelectorAll('*').forEach(el => {
@@ -37,7 +41,7 @@ const parseTemplate = (fragment, data, parseTextNodes=true) => {
 	})
 }
 
-const template = id => {
+var template = id => {
 	const tmpl = document.getElementById(id);
 	return data => {
 		const clone = tmpl.content.cloneNode(true);
@@ -46,5 +50,5 @@ const template = id => {
 	};
 };
 
-export {template, parseTemplate}
+// export {template, parseTemplate}
 

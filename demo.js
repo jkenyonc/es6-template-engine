@@ -1,5 +1,3 @@
-import {template, parseTemplate} from './templating.js'
-
 const taskTemplate = template('task');
 const task = (text, checked = false) => {
 	return taskTemplate({
