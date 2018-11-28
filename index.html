@@ -1,0 +1,60 @@
+<template id="task">
+	<li class="task">
+	    <label>
+	    	<input type="checkbox" @click="handleCheck" ?checked="checked">${data.text}
+	    </label>
+	    <button type="button" @click="handleDelete">Delete</button>
+	</li>
+	<div>
+		<div if="bool">
+			<div>
+				<div>
+					${data.text}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script type="module" defer src="./demo.js"></script>
+
+<style>
+	h1 {
+		margin-bottom: 0.33em;
+	}
+	#task-list {
+		list-style: none;
+		padding-left: 0;
+		margin-top: 0;
+	}
+	.task {
+		padding:5px;
+	}
+	.task:hover {
+		background-color: lightgray;
+	}
+	.task button {
+		visibility: hidden;
+		float: right;
+	}
+	.task:hover button {
+		visibility: visible;
+	}
+	.task[data-checked] {
+		text-decoration: line-through;
+	}
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasks</title>
+
+
+<h1>Tasks</h1>
+<ul id="task-list"></ul>
+<form @submit="handleSubmit" autocomplete="off">
+	<fieldset>
+		<legend if="legendExists">Create a task</legend>
+		<input name="text" required>
+		<button>Create</button>
+	</fieldset>
+</form>
